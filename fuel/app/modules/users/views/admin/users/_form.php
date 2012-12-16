@@ -19,7 +19,7 @@
 			<?php echo \Form::label('Password', 'password', array('class' => 'control-label')); ?>
 			<div class="controls">
 				<?php echo Form::input('password', \Fuel\Core\Input::post('password')); ?>
-                            <br /><span class="help-block">Leave it blank, if you don't want to change it.</span> 
+                <br /><span class="help-block">Leave it blank, if you don't want to change it.</span>
 
 			</div>
 		</div>
@@ -28,13 +28,12 @@
 			<?php echo \Form::label('Member of', 'role', array('class' => 'control-label')); ?>
 			<div class="controls">
                             
-                            
-                        <?php foreach($roles as $value => $key): ?>
+                <?php foreach($roles as $value => $key): ?>
 
-                            
-                            <?php echo Form::checkbox('role[]', $value); ?> <?php echo $key; ?><br />
+                    
+                    <?php echo Form::checkbox('role[]', $value); ?> <?php echo $key; ?><br />
 
-                        <?php endforeach; ?>
+                <?php endforeach; ?>
                             
                             
                             

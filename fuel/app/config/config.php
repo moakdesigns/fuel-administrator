@@ -93,6 +93,7 @@ return array(
 		),
 		'config' => 
 		array(
+			'website'
 		),
 		'language' => 
 		array(

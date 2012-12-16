@@ -3,13 +3,14 @@
     
     <head>
         <meta charset="utf-8">
-        <title>
-        </title>
+        <title><?php echo \Config::get('website.website_title'); ?> <?php echo (($title)) ? ' - '.$title : ''; ?></title>
+        
         <meta name="description" content="">
         <meta name="author" content="">
-        <!-- Le styles -->
-        <?php //echo Asset::theme_css( 'bootstrap.css'); ?>
-        <?php //echo Asset::theme_css( 'sortable.css'); ?>
+
+        <?php echo \Theme::instance()->asset->css('bootstrap.css'); ?>
+        <?php echo \Theme::instance()->asset->css('sortable.css'); ?>
+
         <style type="text/css">
             body {
                 padding-top: 40px;
@@ -37,13 +38,17 @@
     
     <body>
 
-        <?php echo \Theme::instance()->get_partial('navigation', 'partials/navigation'); ?>
+        <?php echo $partials['navigation']; ?>
         
-        <?php //echo \Theme::instance()->get_partial('subnavigation', 'partials/subnavigation'); ?>
-
+        <?php if(isset($partials['subnavigation'])): ?>
+            <?php echo $partials['subnavigation']; ?>
+        <?php else: ?>
+            <br/>
+        <?php endif; ?>
+        
         <div class="container">
                   		
-      		<?php echo \Theme::instance()->view('partials/alert'); ?>
+      		<?php echo $partials['alert_messages']; ?>
 
             <div class="row">
                 
@@ -60,14 +65,14 @@
         </div>
         
         
-        <?php //echo Asset::theme_js('jquery.js'); ?>
-        <?php //echo Asset::theme_js('bootstrap.js'); ?>
-        <?php //echo Asset::theme_js('bootstrap-tooltip.js'); ?>
-        <?php //echo Asset::theme_js('modernizr.min.js'); ?>
-        <?php //echo Asset::theme_js('respond.min.js'); ?>
-        <?php //echo Asset::theme_js('jquery-ui.min.js'); ?>
-        <?php // echo Asset::theme_js('jquery.ui.nestedSortable.js'); ?>
-        <?php //echo Asset::theme_js('admin.js'); ?>
+        <?php echo \Theme::instance()->asset->js('jquery.js'); ?>
+        <?php echo \Theme::instance()->asset->js('bootstrap.js'); ?>
+        <?php echo \Theme::instance()->asset->js('bootstrap-tooltip.js'); ?>
+        <?php echo \Theme::instance()->asset->js('modernizr.min.js'); ?>
+        <?php echo \Theme::instance()->asset->js('respond.min.js'); ?>
+        <?php echo \Theme::instance()->asset->js('jquery-ui.min.js'); ?>
+        <?php echo \Theme::instance()->asset->js('jquery.ui.nestedSortable.js'); ?>
+        <?php echo \Theme::instance()->asset->js('admin.js'); ?>
 
     </body>
 

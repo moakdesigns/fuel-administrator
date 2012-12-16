@@ -12,7 +12,8 @@ class Controller_Base extends Controller {
 
         // set the page template
         $this->theme->set_template('layouts/default');
-
+        $this->theme->set_partial('alert_messages', 'partials/alert_messages');
+        $this->theme->get_template()->set('title', ucwords(implode(" - ", \Uri::segments())));
         $this->current_user = "Guest";
 		// Assign current_user to the instance so controllers can use it
 		if(\Warden::check())
