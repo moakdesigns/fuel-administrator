@@ -30,8 +30,10 @@
                             
                 <?php foreach($roles as $value => $key): ?>
 
-                    
-                    <?php echo Form::checkbox('role[]', $value); ?> <?php echo $key; ?><br />
+                    <?php
+                        $checked = (isset($user->roles[$value])) ? true : false; 
+                    ?>
+                    <?php echo Form::checkbox('role[]', $value, $checked); ?> <?php echo $key; ?><br />
 
                 <?php endforeach; ?>
                             

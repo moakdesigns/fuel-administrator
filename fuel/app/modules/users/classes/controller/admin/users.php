@@ -11,7 +11,7 @@ class Controller_Admin_Users extends \Controller_Admin
 
         \Theme::instance()->set_partial('subnavigation', 'partials/subnavigation');
 
-        if(!\Warden::can(array('read','create', 'update', 'delete'), 'users'))
+        if(!\Warden::can(array('read'), 'users'))
         {
             \Messages::warning('Ups. You have not the permission to do this action.');
             \Fuel\Core\Response::redirect('admin');
@@ -132,8 +132,6 @@ class Controller_Admin_Users extends \Controller_Admin
             $userroles[$key] = $value->name;
         }
             
-            
-            
         if (\Input::method() == 'POST')
         {
             $user = \Warden\Model_User::find_by_id($id);
@@ -163,36 +161,25 @@ class Controller_Admin_Users extends \Controller_Admin
                     $user->encrypted_password  =  \Warden::encrypt_password( \Input::post('password') );
                 }
                 
-                
-                
+
                 try
                 {
-
-                    \Debug::dump("Before unset: ",$user->roles);
-
-                    unset($user->roles);
-
+                    //unset($user->roles);
+                    \Debug::dump($user->roles);
                     foreach (\Input::post('role') as $selected_role) 
                     {
-                        \Debug::dump("post: ",$selected_role);
+
+                        if(isset($user->roles[$selected_role]))
+                        {
+                            unset($user->roles[$selected_role]);
+                        }
+                        \Debug::dump(\Model_Role::find((int)$selected_role));
                         $user->roles[$selected_role] = \Model_Role::find((int)$selected_role);
                     }
                         
-                    \Debug::dump("After set: ",$user->roles); 
-                       
-                        
-                    //\Debug::dump($user);
-
                     if($user->save())
                     {
-                       // \Debug::dump("Post: ",\Input::post('role'));
-                       // 
-                        //\Debug::dump("After unset: ",$user->roles);
-                        
-                        
-                        
-                        
-                        
+                    
                         \Messages::success('Updated user #' . $id);
                        // \Response::redirect('admin/users');
                     }
