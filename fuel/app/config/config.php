@@ -83,7 +83,7 @@ return array(
 	array(
 		'packages' => 
 		array(
-			'orm', 'dbmenu', 'warden', 'email'
+			'orm', 'dbmenu', 'warden', 'email', 'breadcrumb'
 		),
 		'modules' => 
 		array(

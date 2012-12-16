@@ -5,6 +5,11 @@ namespace Users;
 class Controller_Admin_Users extends \Controller_Admin 
 {
 
+    public function before()
+    {
+        parent::before();
+    }
+
 	public function action_index()
 	{
             if(!\Warden::can(array('create', 'update', 'delete'), 'users'))
@@ -22,12 +27,10 @@ class Controller_Admin_Users extends \Controller_Admin
                         'uri_segment' => 4
 
                     );
-             \Pagination::set_config($config);
-                //    \Fuel\Core\Debug::dump(count(\Warden\Model_User::find('all')), "per page: ".\Pagination::$per_page, "offset: ".\Pagination::$offset);
-		$data['users'] = \Warden\Model_User::find('all',array(
-                                                            
-                                                            'limit' => \Pagination::$per_page,
-                                                            'offset' => \Pagination::$offset)
+            $pagination = \Pagination::forge('users_pagination', $config);
+		  $data['users'] = \Warden\Model_User::find('all',array(
+                                                            'limit' => $pagination->per_page,
+                                                            'offset' => $pagination->offset)
                                                          );
                 
                 
@@ -37,11 +40,19 @@ class Controller_Admin_Users extends \Controller_Admin
                                                 
 
                 
-                $data['pagination'] = \Pagination::create_links();
+                $data['pagination'] = $pagination->render();
                 $partial    = array();
-                $this->template->set_partial('subnavigation', 'subnavigation', $partial );
-                $this->template->title("Manage Users");
-		$this->template->build('admin/users/index', $data);
+                //$this->template->set_partial('subnavigation', 'subnavigation', $partial );
+                //$this->template->title("Manage Users");
+		//$this->template->build('admin/users/index', $data);
+
+        \Theme::instance()->set_partial('subnavigation', 'partials/subnavigation');
+
+        return \Theme::instance()
+                        ->get_template()
+                        ->set(  'content', 
+                                \Theme::instance()->view('admin/users/index', $data)
+                            );
 
 	}
 

@@ -11,11 +11,7 @@ class Controller_Base extends Controller {
         $this->theme = \Theme::instance();
 
         // set the page template
-        $this->theme->set_template('layouts/homepage');
-
-        // set the page title (can be chained to set_template() too)
-        $this->theme->get_template()->set('title', 'My homepage');  
-
+        $this->theme->set_template('layouts/default');
 
         $this->current_user = "Guest";
 		// Assign current_user to the instance so controllers can use it

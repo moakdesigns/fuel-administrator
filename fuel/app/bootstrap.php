@@ -12,7 +12,7 @@ Autoloader::add_classes(array(
 	// Add classes you want to override here
 	// Example: 'View' => APPPATH.'classes/view.php',
 	'Theme' => APPPATH.'classes/theme.php',
-	'Pagination'   => APPPATH.'classes/pagination.php'
+	//'Pagination'   => APPPATH.'classes/pagination.php'
 ));
 
 // Register the autoloader

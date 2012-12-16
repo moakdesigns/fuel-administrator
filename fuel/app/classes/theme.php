@@ -367,12 +367,16 @@ class Theme extends Fuel\Core\Theme
 	 */
 	public function get_partial($section, $view)
 	{
+		\Debug::dump($section, $view, $this->partials);
+		
 		// make sure the partial entry exists
+		/*
 		if ( ! array_key_exists($section, $this->partials) or ! array_key_exists($view, $this->partials[$section]))
 		{
 			throw new \ThemeException(sprintf('No partial named "%s" can be found in the "%s" section.', $view, $section));
 		}
-
+		*/
+		
 		return $this->partials[$section][$view];
 	}
 

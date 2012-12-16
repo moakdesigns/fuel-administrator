@@ -11,9 +11,13 @@ class Controller_Admin extends Controller_Base {
         \Lang::load('users');
         
         
-        $this->template = Template::forge()->set_layout('default')->set_theme('admin');
-        \Asset::set_theme('admin');
-
+        // load the theme template
+        $this->theme = \Theme::instance();
+        $this->theme->active('admin');
+        // set the page template
+        $this->theme->set_template('layouts/default');
+        $this->theme->set_partial('navigation', 'partials/navigation');
+        $this->theme->set_partial('subnavigation', 'partials/subnavigation');
         //check that the user is logged in and has the permission to see the admin panel
         if(!\Warden::check() || (\Warden::check() && !\Warden::can(array('execute'), 'controlpanel')))
         {
