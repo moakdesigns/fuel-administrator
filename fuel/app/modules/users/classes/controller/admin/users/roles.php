@@ -77,7 +77,7 @@ class Controller_Admin_Users_Roles extends \Controller_Admin
             $val = \Validation::forge();
             $val->add_callable('myvalidation');
             $val->add_field('name', 'Name', 'required|min_length[3]|max_length[20]|unique[roles.name]');
-            $val->add_field('description', 'Description', 'trim');
+            $val->add_field('description', 'Description', 'trim|required');
             if ( $val->run() )
             {
                 $role = new \Warden\Model_Role(array(

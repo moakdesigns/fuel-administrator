@@ -53,16 +53,8 @@ class Controller_Admin_Users_Permissions extends \Controller_Admin
             \Fuel\Core\Response::redirect('admin');
         }*/
 
-        $user = new \Warden\Model_User();
-        
-        $roles = \Warden\Model_Role::find()->get();
-        
-        $userroles = array();
-        
-        foreach($roles as $key => $value)
-        {             
-            $userroles[$key] = $value->name;
-        }
+        $permission = new \Warden\Model_Permission();
+                
                 
 		if (\Input::method() == 'POST')
 		{
@@ -70,27 +62,25 @@ class Controller_Admin_Users_Permissions extends \Controller_Admin
             
             $val = \Validation::forge();
             $val->add_callable('myvalidation');
-            $val->add_field('username', 'Username', 'required|min_length[3]|max_length[20]|unique[users.username]');
-            $val->add_field('password', 'Password', 'required|min_length[6]|max_length[20]');
-            $val->add_field('email', 'E-Mail', 'required|valid_email|unique[users.email]');
+            $val->add_field('name', 'Name', 'required|min_length[3]|max_length[20]');
+            $val->add_field('resource', 'Resource', 'required|min_length[3]|max_length[30]');
+            $val->add_field('action', 'Action', 'required|min_length[3]|max_length[30]');
+            $val->add_field('description', 'Description', 'required|min_length[3]|max_length[100]');
             if ( $val->run() )
             {
-                $user = new \Warden\Model_User(array(
-                        'username' => $val->validated('username'),
-                        'password' => $val->validated('password'),
-                        'email'	   => $val->validated('email'),
+                $permission = new \Warden\Model_Permission(array(
+                        'name'      => $val->validated('name'),
+                        'resource'  => $val->validated('resource'),
+                        'action'	=> $val->validated('action'),
+                        'description'    => $val->validated('description'),
                 ));
 
-                if( $user->save() )
+                if( $permission->save() )
                 {
-                    foreach (\Input::post('role') as $selected_role) 
-                    {
-                        //\Debug::dump("post: ",$selected_role);
-                        $user->roles[$selected_role] = \Model_Role::find((int)$selected_role);
-                    }
-                    $user->save();
-                    \Messages::success('Account successfully created.');
-                    \Response::redirect('admin/users');
+                    
+                    $permission->save();
+                    \Messages::success('Permission successfully created.');
+                    \Response::redirect('admin/users/permissions');
                 }
                 else
                 {
@@ -103,14 +93,13 @@ class Controller_Admin_Users_Permissions extends \Controller_Admin
             }
         }
         
-        $data['user'] = $user;
-        $data['roles'] = $userroles;
+        $data['permission'] = $permission;
 
         return \Theme::instance()
                 ->get_template()
-               // ->set(  'title', 'Create User')
+                ->set(  'title', 'Create Permission')
                 ->set(  'content', 
-                        \Theme::instance()->view('admin/users/create', $data)
+                        \Theme::instance()->view('admin/permissions/create', $data)
                     );
 	}
    

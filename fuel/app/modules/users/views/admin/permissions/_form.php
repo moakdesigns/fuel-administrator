@@ -4,46 +4,30 @@
         <div class="control-group">
 			<?php echo \Form::label('Name', 'name', array('class' => 'control-label')); ?>
 			<div class="controls">
-				<?php echo Form::input('name', \Input::post('name', isset($role) ? $role->name : '')); ?>
+				<?php echo Form::input('name', \Input::post('name', isset($permission) ? $permission->name : '')); ?>
 			</div>
 		</div>
+
+        <div class="control-group">
+            <?php echo \Form::label('Resource', 'resource', array('class' => 'control-label')); ?>
+            <div class="controls">
+                <?php echo Form::input('resource', \Input::post('resource', isset($permission) ? $permission->resource : '')); ?>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <?php echo \Form::label('Action', 'action', array('class' => 'control-label')); ?>
+            <div class="controls">
+                <?php echo Form::input('action', \Input::post('action', isset($permission) ? $permission->action : '')); ?>
+            </div>
+        </div>
+
         <div class="control-group">
 			<?php echo \Form::label('Description', 'description', array('class' => 'control-label')); ?>
 			<div class="controls">
-				<?php echo Form::input('description', \Input::post('description', isset($role) ? $role->description : '')); ?>
+				<?php echo Form::input('description', \Input::post('description', isset($permission) ? $permission->description : '')); ?>
 			</div>
 		</div>
-
-        <div class="control-group">
-            <?php echo \Form::label('Permissions', 'permissions', array('class' => 'control-label')); ?>
-
-            <div class="controls">       
-
-                <?php foreach($permissions as $resource => $actions): ?>
-
-                    <div class="span4">
-                        
-                        <h5><?php echo ucfirst($resource); ?></h5>
-                        
-                        <?php foreach($actions as $key => $action): ?>
-
-                            <p>
-                            <?php $checked = (isset($role->permissions[$action['id']])) ? true : false; ?>
-                            <?php echo \Form::checkbox('permission[]', $action['id'], $checked); ?> <?php echo ucfirst($action['action']); ?>
-                            <span class="help-block"><?php echo $action['description']; ?></span>
-                            </p>
-
-                        <?php endforeach; ?>
-                    
-                    </div>
-
-                <?php endforeach; ?>
-                    
-            </div>
-        </div>  
-            
-                
-	
 
     	<div class="form-actions">
                     <?php if(!isset($role)): ?>
