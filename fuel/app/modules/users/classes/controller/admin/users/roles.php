@@ -53,6 +53,21 @@ class Controller_Admin_Users_Roles extends \Controller_Admin
             \Fuel\Core\Response::redirect('admin');
         }*/
 
+
+        $permissions    = \Warden\Model_Permission::find('all', array('order_by' => array('resource' => 'asc')));
+
+        $roles_permissions = array();
+        foreach($permissions as $key => $value)
+        {
+            $roles_permissions[$value->resource][] = array( "id"            => (int)$value->id, 
+                                                            "resource"      => $value->resource,
+                                                            "action"        => $value->action,
+                                                            "name"          => $value->name,
+                                                            "description"   => $value->description
+                                                                    );
+        }
+
+
         $role = new \Warden\Model_Role();
         
 		if (\Input::method() == 'POST')
@@ -70,6 +85,16 @@ class Controller_Admin_Users_Roles extends \Controller_Admin
                         'description'   => $val->validated('description'),
                 ));
 
+                foreach (\Input::post('permission') as $selected_permission) 
+                {
+                    if(isset($role->permissions[$selected_permission]))
+                    {
+                        unset($role->permissions);
+                    }
+
+                    $role->permissions[$selected_permission] = \Model_Permission::find((int)$selected_permission);
+                }
+
                 if( $role->save() )
                 {
                     \Messages::success('Role successfully created.');
@@ -86,7 +111,8 @@ class Controller_Admin_Users_Roles extends \Controller_Admin
             }
         }
         
-        $data['role'] = $role;
+        $data['role']           = $role;
+        $data['permissions']    = $roles_permissions;
 
         return \Theme::instance()
                 ->get_template()
@@ -108,8 +134,6 @@ class Controller_Admin_Users_Roles extends \Controller_Admin
         $role   = \Warden\Model_Role::find_by_id($id);
         $permissions    = \Warden\Model_Permission::find('all', array('order_by' => array('resource' => 'asc')));
 
-        //\Debug::dump($permissions);
-
         $roles_permissions = array();
         foreach($permissions as $key => $value)
         {
@@ -120,8 +144,6 @@ class Controller_Admin_Users_Roles extends \Controller_Admin
                                                             "description"   => $value->description
                                                                     );
         }
-
-        //\Debug::dump($roles_permissions);
 
         if (\Input::method() == 'POST')
         {
