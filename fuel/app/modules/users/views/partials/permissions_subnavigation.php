@@ -5,7 +5,7 @@
             <ul class="nav pull-right">
                 
                 <li>
-                    <?php echo Html::anchor('admin/users/roles/create', 'Create Role'); ?>
+                    <?php echo Html::anchor('admin/users/permissions/create', 'Create Permission'); ?>
                 </li>
             </ul>
             

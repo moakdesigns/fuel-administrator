@@ -2,35 +2,35 @@
 
 namespace Users;
 
-class Controller_Admin_Users extends \Controller_Admin 
+class Controller_Admin_Users_Permissions extends \Controller_Admin 
 {
 
     public function before()
     {
         parent::before();
 
-        \Theme::instance()->set_partial('subnavigation', 'partials/subnavigation');
+        \Theme::instance()->set_partial('subnavigation', 'partials/permissions_subnavigation');
 
-        if(!\Warden::can(array('read'), 'users'))
+        /*if(!\Warden::can(array('read'), 'users'))
         {
             \Messages::warning('Ups. You have not the permission to do this action.');
             \Fuel\Core\Response::redirect('admin');
-        }     
+        } */    
     }
 
 	public function action_index()
 	{
             
         $config = array(
-                    'pagination_url' => \Fuel\Core\Uri::base().'admin/users/index/',
-                    'total_items' => count(\Warden\Model_User::find('all')),
+                    'pagination_url' => \Fuel\Core\Uri::base().'admin/users/permissions/index/',
+                    'total_items' => count(\Warden\Model_Permission::find('all')),
                     'per_page' => 20,
                     'uri_segment' => 4
 
                     );
 
-        $pagination = \Pagination::forge('users_pagination', $config);
-		$data['users'] = \Warden\Model_User::find('all', array(
+        $pagination = \Pagination::forge('permissions_pagination', $config);
+		$data['permissions'] = \Warden\Model_Permission::find('all', array(
                                                             'limit' => $pagination->per_page,
                                                             'offset' => $pagination->offset)
                                                          );
@@ -39,19 +39,19 @@ class Controller_Admin_Users extends \Controller_Admin
                 
         return \Theme::instance()
                 ->get_template()
-                ->set(  'title', 'Manage Users')
+                ->set(  'title', 'Manage Permissions')
                 ->set(  'content', 
-                        \Theme::instance()->view('admin/users/index', $data)
+                        \Theme::instance()->view('admin/permissions/index', $data)
                     );
 	}
  
 	public function action_create($id = null)
 	{
-        if(!\Warden::can(array('create'), 'users'))
+        /*if(!\Warden::can(array('create'), 'users'))
         {
             \Messages::warning('Ups. You have not the permission to do this action.');
             \Fuel\Core\Response::redirect('admin');
-        }
+        }*/
 
         $user = new \Warden\Model_User();
         
@@ -116,11 +116,11 @@ class Controller_Admin_Users extends \Controller_Admin
    
     public function action_edit($id = null)
 	{
-        if(!\Warden::can(array('update'), 'users'))
+        /*if(!\Warden::can(array('update'), 'users'))
         {
             \Messages::warning('Ups. You have not the permission to do this action.');
             \Fuel\Core\Response::redirect('/');
-        }
+        }*/
         
         $user   = \Warden\Model_User::find_by_id($id);
         $roles  = \Warden\Model_Role::find()->get();
@@ -208,106 +208,23 @@ class Controller_Admin_Users extends \Controller_Admin
             
 	public function action_delete($id = null)
 	{
-        if(!\Warden::can(array('delete'), 'users'))
+        /*if(!\Warden::can(array('delete'), 'users'))
         {
             \Messages::warning('Ups. You have not the permission to do this action.');
             \Fuel\Core\Response::redirect('/');
-        }
+        }*/
 
-		if ($user = \Warden\Model_User::find_by_id($id))
+		if ($user = \Warden\Model_Permissions::find_by_id($id))
 		{
 			$user->delete();
 
-			\Messages::success('Deleted user #'.$id);
+			\Messages::success('Deleted permission #'.$id);
 		}
 		else
 		{
-			\Messages::error('Could not delete user #'.$id);
+			\Messages::error('Could not delete permission #'.$id);
 		}
                 
-        \Response::redirect('admin/users');        
+        \Response::redirect('admin/users/permissions');        
 	}
-        
-    public function action_activate($id = null)
-	{
-        if(!\Warden::can('update', 'users'))
-        {
-            \Messages::set_flash('notice', 'Ups. You have not the permission to do this action.');
-            \Fuel\Core\Response::redirect('/');
-        }
-
-		$user = \Warden\Model_User::find_by_id($id);
-
-		$user->is_confirmed = 1;
-        $user->confirmation_token = NULL;
-        if ($user->save())
-        {
-                \Messages::success('User activated!');
-                \Response::redirect('admin/users');
-        }
-
-        else
-        {
-                \Messages::error('Ups, something going wrong.');
-                \Response::redirect('admin/users');
-        }
-
-        \Response::redirect('admin/users');
-	}
-
-    
-    public function action_deactivate($id = null)
-	{
-        if(!\Warden::can(array('create', 'update', 'delete'), 'users'))
-        {
-            \Messages::set_flash('notice', 'Ups. You have not the permission to do this action.');
-            \Fuel\Core\Response::redirect('/');
-        }
-
-		$user = \Warden\Model_User::find_by_id($id);
-
-		$user->is_confirmed = 0;
-        $user->confirmation_token = NULL;
-        if ($user->save())
-        {
-            \Messages::success('User deactivated!');
-            \Response::redirect('admin/users');
-        }
-
-        else
-        {
-            \Messages::error('Ups, something going wrong.');
-            \Response::redirect('admin/users');
-        }
-	}
-
-    public function action_inactive()
-    {
-            
-        $config = array(
-                    'pagination_url' => \Fuel\Core\Uri::base().'admin/users/inactive/',
-                    'total_items' => count(\Warden\Model_User::find('all', array('where' => array(array('is_confirmed', 0))))),
-                    'per_page' => 20,
-                    'uri_segment' => 4
-
-                    );
-
-        $pagination = \Pagination::forge('users_pagination', $config);
-        $data['users'] = \Warden\Model_User::find('all', array(
-                                                            'where'     => array(array('is_confirmed', 0)),
-                                                            'limit'     => $pagination->per_page,
-                                                            'offset'    => $pagination->offset)
-                                                         );
-                        
-        $data['pagination'] = $pagination->render();
-                
-        return \Theme::instance()
-                ->get_template()
-                ->set(  'title', 'Inactive Users')
-                ->set(  'content', 
-                        \Theme::instance()->view('admin/users/index', $data)
-                    );
-    }   
-        
-
 }
