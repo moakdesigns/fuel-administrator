@@ -12,7 +12,7 @@
 
 namespace main;
 
-class Controller_Main extends \Controller_Base
+class Controller_Admin_Main extends \Controller_Admin
 {
 
 
@@ -37,24 +37,7 @@ class Controller_Main extends \Controller_Base
 		return \Theme::instance()
 						->get_template()
 						->set(	'content', 
-								\Theme::instance()->view('main/index')
+								\Theme::instance()->view('admin/main/index')
 							);
-	}
-
-	/**
-	 * The 404 action for the application.
-	 * 
-	 * @access  public
-	 * @return  Response
-	 */
-	public function action_404()
-	{
-		return \Theme::instance()
-						->get_template()
-						->set(	'content', 
-								\Theme::instance()->view('main/404')
-							);
-	}
-
-	
+	}	
 }

@@ -11,7 +11,7 @@
             <div class="nav-collapse">
                 <ul class="nav">
 
-                    <?php echo \DbMenu::build('admin'); ?>
+                    <?php echo \DbMenu::build('main'); ?>
 
                 </ul>
                 <ul class="nav pull-right">

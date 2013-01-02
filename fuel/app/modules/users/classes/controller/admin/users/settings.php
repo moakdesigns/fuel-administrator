@@ -57,11 +57,11 @@ class Controller_Admin_Users_Settings extends \Controller_Admin
             }
         }
 
-
-
-
-        $this->template->title("User Settings");
-        $this->template->build('admin/settings/form');
+        return \Theme::instance()
+                ->get_template()
+                ->set(  'content', 
+                        \Theme::instance()->view('admin/settings/form')
+                    );
 
     }
 	

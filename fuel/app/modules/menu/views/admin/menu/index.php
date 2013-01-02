@@ -21,11 +21,15 @@
                                         <div class="navbar-inner">
                                             <ul class="nav pull-right">
                                                 <li>
-                                                    <?php echo Html::anchor('menu/edit_category/'.$category['catid'], 'Edit Category'); ?>
+                                                    <?php echo Html::anchor('admin/menu/delete_category/'.$category['catid'], 'Delete Category', array('onclick' => "return confirm('Are you sure?')")); ?>
                                                 </li>
                                                 <li class="divider-vertical"></li>
                                                 <li>
-                                                    <?php echo Html::anchor('menu/create/'.$category['catid'], 'Add Link'); ?>
+                                                    <?php echo Html::anchor('admin/menu/edit_category/'.$category['catid'], 'Edit Category'); ?>
+                                                </li>
+                                                <li class="divider-vertical"></li>
+                                                <li>
+                                                    <?php echo Html::anchor('admin/menu/create/'.$category['catid'], 'Add Link'); ?>
                                                 </li>
                                             </ul>
                                         </div>
@@ -53,8 +57,8 @@
                                                     <?php endif; ?>
                                                     <td class="span1"><?php echo $menu['position']; ?></td>
                                                     <td class="span2">
-                                                            <?php echo Html::anchor('menu/edit/'.$menu['id'], 'Edit'); ?> |
-                                                            <?php echo Html::anchor('menu/delete/'.$menu['id'], 'Delete', array('onclick' => "return confirm('Are you sure?')")); ?>
+                                                            <?php echo Html::anchor('admin/menu/edit/'.$menu['id'], 'Edit'); ?> |
+                                                            <?php echo Html::anchor('admin/menu/delete/'.$menu['id'], 'Delete', array('onclick' => "return confirm('Are you sure?')")); ?>
 
                                                     </td>
                                                 </tr>

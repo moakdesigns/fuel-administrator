@@ -1,4 +1,4 @@
-<?php echo Form::open(array('class' => "form-horizontal")); ?>
+<?php echo Form::open(array('class' => "form-inline form-horizontal")); ?>
 
 		
 		<div class="control-group">
@@ -78,7 +78,7 @@
 		</div>
             
 		<div class="form-actions">
-			<?php echo Form::submit('submit', 'Save', array('class' => 'btn btn-primary')); ?> <?php echo \Html::anchor('menu', 'Cancel', array('class' => 'btn btn-danger')); ?>
+			<?php echo Form::submit('submit', 'Save', array('class' => 'btn btn-primary')); ?> <?php echo \Html::anchor('admin/menu', 'Cancel', array('class' => 'btn btn-danger')); ?>
 
 		</div>
 <?php echo Form::close(); ?>

@@ -242,7 +242,7 @@ class Controller_Admin_Menu extends \Controller_Admin
                 ->get_template()
                 ->set(  'title', 'Create Menu Category')
                 ->set(  'content', 
-                        \Theme::instance()->view('admin/menu/create_category', $data)
+                        \Theme::instance()->view('admin/menu/create_category')
                     );
 
     }
@@ -281,16 +281,16 @@ class Controller_Admin_Menu extends \Controller_Admin
 
     public function action_delete_category($id = null)
     {
-        $menu = \Menu\Model_Menu::find_by_id($id);
+        $menu = \Menu\Model_Categories::find_by_id($id);
 
         if ($menu && $menu->delete())
         {
-            \Messages::success('Deleted menu entry #'.$id);
+            \Messages::success('Deleted menu category entry #'.$id);
         }
 
         else
         {
-            \Messages::error('error','Could not delete menu entry #'.$id);
+            \Messages::error('error','Could not delete menu category entry #'.$id);
         }
 
         \Response::redirect('admin/menu');

@@ -1,8 +1,7 @@
 <?php 
-	$data['role']			= $role;
-	$data['permissions']	= $permissions;
+	$data['permission']	= $permission;
  
- 	echo render('admin/roles/_form', $data); 
+ 	echo render('admin/permissions/_form', $data); 
 ?>
 
 

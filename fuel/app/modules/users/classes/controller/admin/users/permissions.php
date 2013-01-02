@@ -111,59 +111,39 @@ class Controller_Admin_Users_Permissions extends \Controller_Admin
             \Fuel\Core\Response::redirect('/');
         }*/
         
-        $user   = \Warden\Model_User::find_by_id($id);
-        $roles  = \Warden\Model_Role::find()->get();
+        $permission   = \Warden\Model_Permission::find_by_id($id);
 
-        $userroles = array();
-        foreach($roles as $key => $value)
-        {
-            $userroles[$key] = $value->name;
-        }
+        
             
         if (\Input::method() == 'POST')
         {
-            $user = \Warden\Model_User::find_by_id($id);
+            $permission = \Warden\Model_Permission::find_by_id($id);
            
             $val = \Validation::forge();
             $val->add_callable('myvalidation');
-
-            if(\Input::post('username'))
-            {
-                $val->add_field('username', 'Username', 'required|min_length[3]|max_length[20]');
-            }
-
-            if(\Input::post('email'))
-            {
-                $val->add_field('email', 'E-Mail', 'required|valid_email');
-            }
+            $val->add_field('name', 'Name', 'required|min_length[3]|max_length[20]');
+            $val->add_field('resource', 'Resource', 'required|min_length[3]|max_length[30]');
+            $val->add_field('action', 'Action', 'required|min_length[3]|max_length[30]');
+            $val->add_field('description', 'Description', 'required|min_length[3]|max_length[100]');
+            
 
             if($val->run())
             {
                 
-                $user->username        = \Input::post('username');
-                $user->email	       = \Input::post('email');
-                $user->is_confirmed    = (\Input::post('is_confirmed') == 1) ? 1 : 0;
+                $permission->name        = \Input::post('name');
+                $permission->resource        = \Input::post('resource');
+                $permission->action        = \Input::post('action');
+                $permission->description        = \Input::post('description');
                 
-                if(\Input::post('password'))
-                {
-                    $user->encrypted_password  =  \Warden::encrypt_password( \Input::post('password') );
-                }
+                
 
                 try
                 {
-                    foreach (\Input::post('role') as $selected_role) 
-                    {
-                        if(isset($user->roles[$selected_role]))
-                        {
-                            unset($user->roles);
-                        }
-                        $user->roles[$selected_role] = \Model_Role::find((int)$selected_role);
-                    }
                         
-                    if($user->save())
+                    if($permission->save())
                     {
-                        \Messages::success('Updated user #' . $id);
-                        \Response::redirect('admin/users');
+                        \Messages::success('Updated permission #' . $id);
+                        \Response::redirect('admin/users/permissions');
                     }
                     else
                     {
@@ -183,14 +163,12 @@ class Controller_Admin_Users_Permissions extends \Controller_Admin
         }
 
             
-        \Breadcrumb::set("Edit User: ".$user->username,"",3);
-        $data['user'] = $user;
-        $data['roles'] = $userroles;
+        $data['permission'] = $permission;
 
         return \Theme::instance()
                 ->get_template()
                 ->set(  'content', 
-                        \Theme::instance()->view('admin/users/edit', $data)
+                        \Theme::instance()->view('admin/permissions/edit', $data)
                     );
 
 	}
@@ -203,7 +181,7 @@ class Controller_Admin_Users_Permissions extends \Controller_Admin
             \Fuel\Core\Response::redirect('/');
         }*/
 
-		if ($user = \Warden\Model_Permissions::find_by_id($id))
+		if ($user = \Warden\Model_Permission::find_by_id($id))
 		{
 			$user->delete();
 
