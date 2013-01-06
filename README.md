@@ -24,6 +24,7 @@ Currently it includes only the following features:
 * Multilingual support
 * Documentation
 * Simple installer
+* Online Demo
 
 
 ## Installation
