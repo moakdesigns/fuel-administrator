@@ -28,7 +28,7 @@ Currently it includes only the following features:
 
 ## Installation
 
-At first you have to run the fuelphp installation. (you don't have to download fuelphp again, it's included ;) )
+At first you have to run the fuelphp installation. (you don't have to download fuelphp again, it's always included ;) )
 
 Documentation: http://fuelphp.com/docs/installation/instructions.html#manual
 
@@ -53,8 +53,8 @@ Password: password
 
 ## Credits
 
-Dre1080 - Warden - https://github.com/dre1080/warden
-Phil F - DbMenu - https://github.com/Phil-F/Fuel-DbMenu
-dbpolito - Breadcrumb - https://github.com/dbpolito/Fuel-Breadcrumb
-dbpolito - Message - https://github.com/dbpolito/Fuel-Message
-FuelPHP Team - Framework - https://github.com/fuel
+* Dre1080 - Warden - https://github.com/dre1080/warden
+* Phil F - DbMenu - https://github.com/Phil-F/Fuel-DbMenu
+* dbpolito - Breadcrumb - https://github.com/dbpolito/Fuel-Breadcrumb
+* dbpolito - Message - https://github.com/dbpolito/Fuel-Message
+* FuelPHP Team - Framework - https://github.com/fuel
