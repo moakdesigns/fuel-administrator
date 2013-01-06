@@ -29,9 +29,11 @@ Currently it includes only the following features:
 ## Installation
 
 At first you have to run the fuelphp installation. (you don't have to download fuelphp again, it's included ;) )
+
 Documentation: http://fuelphp.com/docs/installation/instructions.html#manual
 
 Then you have to import the fuel-administrator.sql into your mySQL database
+
 Now update the file /fuel/app/config/development/db.php and update the database information
 
 ## Usage
@@ -44,6 +46,7 @@ via http://localhost/fuel-administrator/public/
 ### Default Login:
 
 Username: admin
+
 Password: password
 
 
