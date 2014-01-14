@@ -47,25 +47,26 @@ class Model_Profile extends \Orm\Model
     protected static $_properties = array(
         'id',
         'user_id',
+          'location',
+          'searchable',
+          'created_at',
+          'updated_at',
+          'first_name' => array(
+              'validation' => array(
+                  'null' => true,
+                  'match_pattern' => array(self::REGEX_NAME),
+              ),
+          ),
+          'last_name' => array(
+              'validation' => array(
+                  'null' => true,
+                  'match_pattern' => array(self::REGEX_NAME),
+              ),
+          ),
         // Example fields
-//        'first_name' => array(
-//            'validation' => array(
-//                'null' => true,
-//                'match_pattern' => array(self::REGEX_NAME),
-//            ),
-//        ),
-//        'last_name' => array(
-//            'validation' => array(
-//                'null' => true,
-//                'match_pattern' => array(self::REGEX_NAME),
-//            ),
-//        ),
 //        'gender',
 //        'bio',
-//        'location',
-//        'searchable',
-//        'created_at',
-//        'updated_at',
+
     );
 
     /**
