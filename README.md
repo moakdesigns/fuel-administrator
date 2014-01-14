@@ -59,3 +59,8 @@ Password: password
 * dbpolito - Breadcrumb - https://github.com/dbpolito/Fuel-Breadcrumb
 * dbpolito - Message - https://github.com/dbpolito/Fuel-Message
 * FuelPHP Team - Framework - https://github.com/fuel
+* 
+
+-----------------------------------------------------------------------
+
+http://moakdesigns.github.io/fuel-administrator .
